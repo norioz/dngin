@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../dngin/Scalar.h"
+#include "../math/Scalar.h"
 
 TEST(ScalarTest, ScalarInit) {
     Scalar s(1.0);
