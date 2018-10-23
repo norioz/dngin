@@ -121,6 +121,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Scalar.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Vector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="internal.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
