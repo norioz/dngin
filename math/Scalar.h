@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef EPSILON
+#define EPSILON 0.000001
+#endif // !EPSILON
+
 // ----------
 // Scalar
 // ----------
@@ -33,38 +37,26 @@ struct Scalar {
     operator float () const { return value; }
 };
 
-bool operator== (Scalar, Scalar) {
-    // UNIMPLEMNETED
-    return false;
-    /*HEY WE DOIN EPSILON STUFF*/ 
+bool operator< (Scalar a, Scalar b) {
+    return (a.value + EPSILON) < b.value;
 }
 
-bool operator!= (Scalar, Scalar) {
-    // UNIMPLEMNETED
-    return false;
-    /*HEY WE DOIN EPSILON STUFF*/ 
+bool operator== (Scalar a, Scalar b) {
+    return !(a < b) && !(b < a);
 }
 
-bool operator<= (Scalar, Scalar) {
-    // UNIMPLEMNETED
-    return false;
-    /*HEY WE DOIN EPSILON STUFF*/ 
+bool operator> (Scalar a, Scalar b) {
+    return b < a;
 }
 
-bool operator>= (Scalar, Scalar) {
-    // UNIMPLEMNETED
-    return false;
-    /*HEY WE DOIN EPSILON STUFF*/ 
+bool operator!= (Scalar a, Scalar b) {
+    return !(a == b);
 }
 
-bool operator> (Scalar, Scalar) {
-    // UNIMPLEMNETED
-    return false;
-    /*HEY WE DOIN EPSILON STUFF*/ 
+bool operator<= (Scalar a, Scalar b) {
+    return !(a > b);
 }
 
-bool operator< (Scalar, Scalar) {
-    // UNIMPLEMNETED
-    return false;
-    /*HEY WE DOIN EPSILON STUFF*/ 
+bool operator>= (Scalar a, Scalar b) {
+    return !(a < b);
 }
