@@ -85,23 +85,27 @@ Scalar max (Scalar a, Args... args) {
     return (a > b) ? a : b;
 }
 
-//function clamp(x, min, max) :
-//    if (x < min) then
-//        x = min;
-//    else if (x > max) then
-//        x = max;
-//return x;
-//end clamp
+Scalar clamp (Scalar x, Scalar min, Scalar max) {
+    if (x < min) {
+        return min;
+    }
+    if (x > max) {
+        return max;
+    }
+    return x;
+}
 
-//Scalar clamp (Scalar a) {
-//
-//}
-//
 //Scalar snap (Scalar a) {
 //
 //}
 
-// linear interpolation between two values
-//Scalar lerp (Scalar a) {
-//
-//}
+Scalar lerp (Scalar a, Scalar b, Scalar interp) {
+    Scalar l = clamp(interp, 0, 1);
+    if (a == b) { return a; }
+    if (a < b) {
+        return a + (b - a) * l;
+    }
+    else {
+        return b + (a - b) * l;
+    }
+}
