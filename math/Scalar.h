@@ -69,20 +69,18 @@ bool neq (Scalar a, Scalar b) {
     return a != b;
 }
 
-Scalar min (Scalar a) { return a; }
+Scalar min (Scalar a, Scalar b) { return (a < b) ? a : b; }
 
 template<typename... Args>
-Scalar min (Scalar a, Args... args) {
-    Scalar b = min(...args);
-    return (a < b) ? a : b;
+Scalar min (Scalar a, Scalar b, Args... args) {
+    return min(min(a, b), args...);
 }
 
-Scalar max (Scalar a) { return a; }
+Scalar max (Scalar a, Scalar b) { return (a > b) ? a : b; }
 
 template<typename... Args>
-Scalar max (Scalar a, Args... args) {
-    Scalar b = max(args...);
-    return (a > b) ? a : b;
+Scalar max (Scalar a, Scalar b, Args... args) {
+    return max(max(a, b), args...);
 }
 
 Scalar clamp (Scalar x, Scalar min, Scalar max) {
@@ -95,8 +93,10 @@ Scalar clamp (Scalar x, Scalar min, Scalar max) {
     return x;
 }
 
-//Scalar snap (Scalar a) {
-//
+//Scalar snap (Scalar val, Scalar min, Scalar max) {
+//    if (val < min) { return min; }
+//    if (val > max) { return max; }
+//    return (val - min) > (max - val) ? max : min;
 //}
 
 Scalar lerp (Scalar a, Scalar b, Scalar interp) {

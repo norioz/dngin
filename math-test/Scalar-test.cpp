@@ -48,3 +48,24 @@ TEST(ScalarTest, Inequality)
     testLogicalLessThan(-0.0001, 0);
     testLogicalLessThan(-0.00001, 0);
 }
+
+TEST(ScalarTest, Min)
+{
+    EXPECT_FLOAT_EQ(0.1, min(1, 0.1, 2));
+    EXPECT_FLOAT_EQ(-1.01, min(0, -1, -1.01));
+    EXPECT_FLOAT_EQ(100, min(100, 1000, 2000));
+    EXPECT_FLOAT_EQ(-1, min(1, 0.1, 2, 100000, -1));
+    EXPECT_FLOAT_EQ(0, min(0, 0.1));
+    EXPECT_FLOAT_EQ(0.1, min(0.1, 0.1, 2));
+    EXPECT_FLOAT_EQ(1, min(1, 2, 2, 2, 1));
+}
+
+TEST(ScalarTest, Max)
+{
+    EXPECT_FLOAT_EQ(1, max(0, 0, 1));
+    EXPECT_FLOAT_EQ(1000, max(10, 100, 1000));
+    EXPECT_FLOAT_EQ(10000.1, max(0, 1000, 10000.1));
+    EXPECT_FLOAT_EQ(0.1, max(-1, -100, 0.1));
+    EXPECT_FLOAT_EQ(0.0001, max(0, 0.0001));
+    EXPECT_FLOAT_EQ(1, max(0, 0, 1, 1));
+}
