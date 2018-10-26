@@ -79,8 +79,26 @@ TEST(ScalarTest, Snap)
 
 TEST(ScalarTest, Clamp)
 {
+    EXPECT_FLOAT_EQ(1, clamp(1, 0, 2));
+    // Expect that a value blow the range returns the min.
+    EXPECT_FLOAT_EQ(0, clamp(-1, 0, 2));
+    // Expect that a value above the range returns the max.
+    EXPECT_FLOAT_EQ(2, clamp(100, 0, 2));
 }
 
 TEST(ScalarTest, Lerp)
 {
+    EXPECT_FLOAT_EQ(1.5, lerp(1, 2, 0.5));
+    EXPECT_FLOAT_EQ(2, lerp(1, 3, 0.5));
+    EXPECT_FLOAT_EQ(0.75, lerp(0, 1, 0.75));
+    EXPECT_FLOAT_EQ(0, lerp(-1, 1, 0.5));
+    // If a and b are the same, the interp value doesn't matter.
+    EXPECT_FLOAT_EQ(1, lerp(1, 1, 0.7));
+    EXPECT_FLOAT_EQ(2, lerp(2, 2, 0.9));
+    // The interp value is clamped between 0 and 1.
+    EXPECT_FLOAT_EQ(1, lerp(1, 2, -1));
+    EXPECT_FLOAT_EQ(2, lerp(1, 2, 1000));
+    EXPECT_FLOAT_EQ(3, lerp(1, 3, 1.1));
+    // The order of a and b doesn't matter.
+    EXPECT_FLOAT_EQ(1.5, lerp(2, 1, 0.5));
 }

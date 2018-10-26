@@ -74,12 +74,8 @@ Scalar max (Scalar a, Scalar b, Args... args) {
 // -----------
 
 Scalar clamp (Scalar x, Scalar min, Scalar max) {
-    if (x < min) {
-        return min;
-    }
-    if (x > max) {
-        return max;
-    }
+    if (x < min) { return min; }
+    if (x > max) { return max; }
     return x;
 }
 
