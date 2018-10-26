@@ -60,3 +60,48 @@ bool operator<= (Scalar a, Scalar b) {
 bool operator>= (Scalar a, Scalar b) {
     return !(a < b);
 }
+
+bool eq (Scalar a, Scalar b) {
+    return a == b;
+}
+
+bool neq (Scalar a, Scalar b) {
+    return a != b;
+}
+
+Scalar min (Scalar a) { return a; }
+
+template<typename... Args>
+Scalar min (Scalar a, Args... args) {
+    Scalar b = min(...args);
+    return (a < b) ? a : b;
+}
+
+Scalar max (Scalar a) { return a; }
+
+template<typename... Args>
+Scalar max (Scalar a, Args... args) {
+    Scalar b = max(args...);
+    return (a > b) ? a : b;
+}
+
+//function clamp(x, min, max) :
+//    if (x < min) then
+//        x = min;
+//    else if (x > max) then
+//        x = max;
+//return x;
+//end clamp
+
+//Scalar clamp (Scalar a) {
+//
+//}
+//
+//Scalar snap (Scalar a) {
+//
+//}
+
+// linear interpolation between two values
+//Scalar lerp (Scalar a) {
+//
+//}
