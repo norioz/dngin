@@ -93,11 +93,11 @@ Scalar clamp (Scalar x, Scalar min, Scalar max) {
     return x;
 }
 
-//Scalar snap (Scalar val, Scalar min, Scalar max) {
-//    if (val < min) { return min; }
-//    if (val > max) { return max; }
-//    return (val - min) > (max - val) ? max : min;
-//}
+Scalar snap (Scalar val, Scalar min, Scalar max) {
+    if (val < min) { return min; }
+    if (val > max) { return max; }
+    return (val - min) > (max - val) ? max : min;
+}
 
 Scalar lerp (Scalar a, Scalar b, Scalar interp) {
     Scalar l = clamp(interp, 0, 1);
