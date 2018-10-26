@@ -7,13 +7,6 @@
 // ----------
 // Scalar
 // ----------
-//min
-//max
-//clamp
-//snap
-//lerp
-//eq / neq - IMPORTANTE
-// ----------
 // Float is equals:
 // absolute - pick some arbitrary epsilon that is significantly small
 // relative - pick the float w / worse error and scale epsilon
@@ -41,34 +34,27 @@ bool operator< (Scalar a, Scalar b) {
     return (a.value + EPSILON) < b.value;
 }
 
-bool operator== (Scalar a, Scalar b) {
-    return !(a < b) && !(b < a);
+bool operator<= (Scalar a, Scalar b) {
+    return !(a > b);
 }
 
 bool operator> (Scalar a, Scalar b) {
     return b < a;
 }
 
-bool operator!= (Scalar a, Scalar b) {
-    return !(a == b);
-}
-
-bool operator<= (Scalar a, Scalar b) {
-    return !(a > b);
-}
-
 bool operator>= (Scalar a, Scalar b) {
     return !(a < b);
 }
 
-bool eq (Scalar a, Scalar b) {
-    return a == b;
+bool operator== (Scalar a, Scalar b) {
+    return !(a < b) && !(b < a);
 }
 
-bool neq (Scalar a, Scalar b) {
-    return a != b;
+bool operator!= (Scalar a, Scalar b) {
+    return !(a == b);
 }
 
+// -----------
 Scalar min (Scalar a, Scalar b) { return (a < b) ? a : b; }
 
 template<typename... Args>
@@ -76,12 +62,16 @@ Scalar min (Scalar a, Scalar b, Args... args) {
     return min(min(a, b), args...);
 }
 
+// -----------
+
 Scalar max (Scalar a, Scalar b) { return (a > b) ? a : b; }
 
 template<typename... Args>
 Scalar max (Scalar a, Scalar b, Args... args) {
     return max(max(a, b), args...);
 }
+
+// -----------
 
 Scalar clamp (Scalar x, Scalar min, Scalar max) {
     if (x < min) {
@@ -93,11 +83,15 @@ Scalar clamp (Scalar x, Scalar min, Scalar max) {
     return x;
 }
 
+// -----------
+
 Scalar snap (Scalar val, Scalar min, Scalar max) {
     if (val < min) { return min; }
     if (val > max) { return max; }
     return (val - min) > (max - val) ? max : min;
 }
+
+// -----------
 
 Scalar lerp (Scalar a, Scalar b, Scalar interp) {
     Scalar l = clamp(interp, 0, 1);

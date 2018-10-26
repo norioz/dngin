@@ -76,3 +76,11 @@ TEST(ScalarTest, Snap)
     // Expect that midpoint snaps round down, not up.
     EXPECT_FLOAT_EQ(1, snap(1.5, 1, 2));
 }
+
+TEST(ScalarTest, Clamp)
+{
+}
+
+TEST(ScalarTest, Lerp)
+{
+}
