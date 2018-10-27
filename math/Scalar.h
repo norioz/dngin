@@ -81,6 +81,8 @@ Scalar clamp (Scalar x, Scalar min, Scalar max) {
 
 // -----------
 
+// returns the value closest to val
+
 Scalar snap (Scalar val, Scalar min, Scalar max) {
     if (val < min) { return min; }
     if (val > max) { return max; }
@@ -89,13 +91,6 @@ Scalar snap (Scalar val, Scalar min, Scalar max) {
 
 // -----------
 
-Scalar lerp (Scalar a, Scalar b, Scalar interp) {
-    Scalar l = clamp(interp, 0, 1);
-    if (a == b) { return a; }
-    if (a < b) {
-        return a + (b - a) * l;
-    }
-    else {
-        return b + (a - b) * l;
-    }
+Scalar lerp (Scalar a, Scalar b, Scalar t) {
+    return a * (1 - t) + b * t;
 }

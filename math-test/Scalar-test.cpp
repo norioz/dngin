@@ -95,10 +95,10 @@ TEST(ScalarTest, Lerp)
     // If a and b are the same, the interp value doesn't matter.
     EXPECT_FLOAT_EQ(1, lerp(1, 1, 0.7));
     EXPECT_FLOAT_EQ(2, lerp(2, 2, 0.9));
-    // The interp value is clamped between 0 and 1.
-    EXPECT_FLOAT_EQ(1, lerp(1, 2, -1));
-    EXPECT_FLOAT_EQ(2, lerp(1, 2, 1000));
-    EXPECT_FLOAT_EQ(3, lerp(1, 3, 1.1));
+    EXPECT_FLOAT_EQ(3, lerp(3, 3, 10));
+    // The interp value is not clamped.
+    EXPECT_FLOAT_EQ(11, lerp(1, 2, 10));
+    EXPECT_FLOAT_EQ(-9, lerp(1, 2, -10));
     // The order of a and b doesn't matter.
     EXPECT_FLOAT_EQ(1.5, lerp(2, 1, 0.5));
 }
