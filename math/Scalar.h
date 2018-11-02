@@ -7,12 +7,14 @@
 // ----------
 // Scalar
 // ----------
-// Float is equals:
-// absolute - pick some arbitrary epsilon that is significantly small
-// relative - pick the float w / worse error and scale epsilon
-// ulp (Units in the Last Place) - does a bitwise comparison
-// https://www.floating-point-gui.de/errors/comparison/
-// https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+// Represents a numeric value.
+// ----------
+// Notes:
+// Scalars are only accurate for comparision to within the absolute (or fixed)
+// value of EPSILON. Because EPSILON is absolute, rather than relative, comparison
+// of numbers that are much larger than EPSILON is not advised.
+// For more information about floating point equality see: absolute, relative, or
+// "units in last place" (ULP).
 
 struct Scalar {
     float value;
@@ -55,6 +57,9 @@ bool operator!= (Scalar a, Scalar b) {
 }
 
 // -----------
+//  min
+// -----------
+// Indicates whether a is strictly less than b.
 Scalar min (Scalar a, Scalar b) { return (a < b) ? a : b; }
 
 template<typename... Args>
@@ -63,7 +68,9 @@ Scalar min (Scalar a, Scalar b, Args... args) {
 }
 
 // -----------
-
+// max
+// -----------
+// Indicates whether a is strictly greater than b.
 Scalar max (Scalar a, Scalar b) { return (a > b) ? a : b; }
 
 template<typename... Args>
@@ -72,25 +79,31 @@ Scalar max (Scalar a, Scalar b, Args... args) {
 }
 
 // -----------
-
-Scalar clamp (Scalar x, Scalar min, Scalar max) {
-    if (x < min) { return min; }
-    if (x > max) { return max; }
-    return x;
+// clamp
+// -----------
+// Constrains x to a value that is between low and high.
+// If x <= low, the clamped value is low.
+// If x >= high, the clamed value is high.
+Scalar clamp (Scalar x, Scalar low, Scalar high) {
+    return max(min(x, high), low);
 }
 
 // -----------
-
-// returns the value closest to val
-
-Scalar snap (Scalar val, Scalar min, Scalar max) {
-    if (val < min) { return min; }
-    if (val > max) { return max; }
-    return (val - min) > (max - val) ? max : min;
+// snap
+// -----------
+// Returns either low or high, based on which is closer to x.
+Scalar snap (Scalar x, Scalar low, Scalar high) {
+    if (x <= low) { return low; }
+    if (x >= high) { return high; }
+    return (x - low) > (high - x) ? high : low;
 }
 
 // -----------
-
+// lerp
+// -----------
+// Linearly extrapolates a factor t along the line through
+// a and b.
+// Ex. lerp(1, 2, 0.5) == 1.5
 Scalar lerp (Scalar a, Scalar b, Scalar t) {
     return a * (1 - t) + b * t;
 }
