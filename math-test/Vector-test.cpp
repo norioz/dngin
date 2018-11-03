@@ -20,6 +20,14 @@ TEST(Vector2Test, SubscriptOp)
     EXPECT_FLOAT_EQ(2, v[0]);
 }
 
+TEST(Vector2Test, Assignment)
+{
+    Vector2 v{ 1, 5 };
+    v = Vector2{ 10, -1 };
+    EXPECT_FLOAT_EQ(10, v.x);
+    EXPECT_FLOAT_EQ(-1, v.y);
+}
+
 TEST(Vector2Test, ArithmeticAssignment)
 {
     // +=
