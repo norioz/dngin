@@ -3,15 +3,10 @@
 // ---------
 // Vector
 // ----------
-//POD type, no constructor.
-//public x, y, z
-//subscript operator []
 //scalar mul / div * /
-//arithmetic assign +=, *=, -=. /=
 //binary add / sub + -
 //unary negation -
 //Eq / Neq ==/!=
-//assign =
 // ---
 //magnitude
 //normalize
@@ -34,8 +29,9 @@
 
 union Vector2 {
     struct { float x, y; };
-    const float & operator[] (size_t idx) const { return (idx == 0) ? x : y; }
-    float & operator[] (size_t idx) { return (idx == 0) ? x : y; }
+    float v[2];
+    const float & operator[] (size_t idx) const { return v[idx]; }
+    float & operator[] (size_t idx) { return v[idx]; }
     Vector2 & operator+= (const Vector2 & other);
     Vector2 & operator-= (const Vector2 & other);
     Vector2 & operator/= (float scalar);
@@ -43,22 +39,26 @@ union Vector2 {
 };
 
 inline Vector2 & Vector2::operator+= (const Vector2 & other) {
-    // UNIMPLEMENTED
+    x += other.x;
+    y += other.y;
     return *this;
 }
 
 inline Vector2 & Vector2::operator-= (const Vector2 & other) {
-    // UNIMPLEMENTED
+    x -= other.x;
+    y -= other.y;
     return *this;
 }
 
 inline Vector2 & Vector2::operator*= (float scalar) {
-    // UNIMPLEMENTED
+    x *= scalar;
+    y *= scalar;
     return *this;
 }
 
 inline Vector2 & Vector2::operator/= (float scalar) {
-    // UNIMPLEMENTED
+    x /= scalar;
+    y /= scalar;
     return *this;
 }
 
