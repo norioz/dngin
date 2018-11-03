@@ -32,27 +32,27 @@ struct Scalar {
     operator float () const { return value; }
 };
 
-bool operator< (Scalar a, Scalar b) {
+inline bool operator< (Scalar a, Scalar b) {
     return (a.value + EPSILON) < b.value;
 }
 
-bool operator<= (Scalar a, Scalar b) {
+inline bool operator<= (Scalar a, Scalar b) {
     return !(a > b);
 }
 
-bool operator> (Scalar a, Scalar b) {
+inline bool operator> (Scalar a, Scalar b) {
     return b < a;
 }
 
-bool operator>= (Scalar a, Scalar b) {
+inline bool operator>= (Scalar a, Scalar b) {
     return !(a < b);
 }
 
-bool operator== (Scalar a, Scalar b) {
+inline bool operator== (Scalar a, Scalar b) {
     return !(a < b) && !(b < a);
 }
 
-bool operator!= (Scalar a, Scalar b) {
+inline bool operator!= (Scalar a, Scalar b) {
     return !(a == b);
 }
 
@@ -60,7 +60,7 @@ bool operator!= (Scalar a, Scalar b) {
 //  min
 // -----------
 // Indicates whether a is strictly less than b.
-Scalar min (Scalar a, Scalar b) { return (a < b) ? a : b; }
+inline Scalar min (Scalar a, Scalar b) { return (a < b) ? a : b; }
 
 template<typename... Args>
 Scalar min (Scalar a, Scalar b, Args... args) {
@@ -71,7 +71,7 @@ Scalar min (Scalar a, Scalar b, Args... args) {
 // max
 // -----------
 // Indicates whether a is strictly greater than b.
-Scalar max (Scalar a, Scalar b) { return (a > b) ? a : b; }
+inline Scalar max (Scalar a, Scalar b) { return (a > b) ? a : b; }
 
 template<typename... Args>
 Scalar max (Scalar a, Scalar b, Args... args) {
@@ -84,7 +84,7 @@ Scalar max (Scalar a, Scalar b, Args... args) {
 // Constrains x to a value that is between low and high.
 // If x <= low, the clamped value is low.
 // If x >= high, the clamed value is high.
-Scalar clamp (Scalar x, Scalar low, Scalar high) {
+inline Scalar clamp (Scalar x, Scalar low, Scalar high) {
     return max(min(x, high), low);
 }
 
@@ -92,7 +92,7 @@ Scalar clamp (Scalar x, Scalar low, Scalar high) {
 // snap
 // -----------
 // Returns either low or high, based on which is closer to x.
-Scalar snap (Scalar x, Scalar low, Scalar high) {
+inline Scalar snap (Scalar x, Scalar low, Scalar high) {
     if (x <= low) { return low; }
     if (x >= high) { return high; }
     return (x - low) > (high - x) ? high : low;
@@ -104,6 +104,6 @@ Scalar snap (Scalar x, Scalar low, Scalar high) {
 // Linearly extrapolates a factor t along the line through
 // a and b.
 // Ex. lerp(1, 2, 0.5) == 1.5
-Scalar lerp (Scalar a, Scalar b, Scalar t) {
+inline Scalar lerp (Scalar a, Scalar b, Scalar t) {
     return a * (1 - t) + b * t;
 }
