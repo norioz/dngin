@@ -137,7 +137,10 @@ TEST(Vector2Test, Normalize)
     EXPECT_FLOAT_EQ(-0.707107, norm.x);
     EXPECT_FLOAT_EQ(-0.707107, norm.y);
     // normalizing a zero vector returns a zero vector
-    //...
+    v.x = 0; v.y = 0;
+    norm = normalize(v);
+    EXPECT_FLOAT_EQ(0, norm.x);
+    EXPECT_FLOAT_EQ(0, norm.y);
 }
 
 TEST(Vector2Test, Distance)
