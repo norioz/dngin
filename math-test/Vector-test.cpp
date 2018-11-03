@@ -113,3 +113,45 @@ TEST(Vector2Test, ArithmeticOperators)
     EXPECT_FLOAT_EQ(3, vD0.x);
     EXPECT_FLOAT_EQ(10, vD0.y);
 }
+
+TEST(Vector2Test, Magnitude)
+{
+    EXPECT_FLOAT_EQ(3.605551275463989, magnitude(Vector2{2, 3}));
+    EXPECT_FLOAT_EQ(5, magnitude(Vector2{-4, 3}));
+}
+
+TEST(Vector2Test, Normalize)
+{
+    Vector2 v{ 1, 1 };
+    Vector2 norm = normalize(v);
+    EXPECT_FLOAT_EQ(0.707107, norm.x);
+    EXPECT_FLOAT_EQ(0.707107, norm.y);
+    // a unit vector should normalize to itself
+    v.x = 0.707107; v.y = 0.707107;
+    norm = normalize(v);
+    EXPECT_FLOAT_EQ(0.707107, norm.x);
+    EXPECT_FLOAT_EQ(0.707107, norm.y);
+    // unit vector points in the direction of the original
+    v.x = -1; v.y = -1;
+    norm = normalize(v);
+    EXPECT_FLOAT_EQ(-0.707107, norm.x);
+    EXPECT_FLOAT_EQ(-0.707107, norm.y);
+    // normalizing a zero vector returns a zero vector
+    //...
+}
+
+TEST(Vector2Test, Distance)
+{
+    Vector2 v1{ -7, -4 }, v2{ 17, 6.5 };
+    EXPECT_FLOAT_EQ(26.196374, dist(v1, v2));
+    // distance between a vector and itself is zero
+    EXPECT_FLOAT_EQ(0, dist(v1, v1));
+}
+
+TEST(Vector2Test, DistanceSquared)
+{
+    Vector2 v1{ 2, -9 }, v2{ -4, 1 };
+    EXPECT_FLOAT_EQ(136.000004905, distSq(v1, v2));
+    // distance squared between a vector and itself is zero
+    EXPECT_FLOAT_EQ(0, distSq(v1, v1));
+}

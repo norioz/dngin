@@ -1,12 +1,11 @@
 #pragma once
 
+#include <math.h>
+#include "Scalar.h"
+
 // ---------
 // Vector
 // ----------
-//magnitude
-//normalize
-//dist
-//distSq
 //convert to a float *
 //project   `
 //deproject `
@@ -35,13 +34,13 @@ union Vector2 {
     Vector2 & operator*= (float scalar);
 };
 
-Vector2 & Vector2::operator= (Vector2 & other) {
+inline Vector2 & Vector2::operator= (Vector2 & other) {
     x = other.x;
     y = other.y;
     return *this;
 }
 
-Vector2 Vector2::operator-() {
+inline Vector2 Vector2::operator-() {
     Vector2 v;
     v.x = -x;
     v.y = -y;
@@ -72,35 +71,35 @@ inline Vector2 & Vector2::operator/= (float scalar) {
     return *this;
 }
 
-Vector2 operator+ (Vector2 a, Vector2 b) {
+inline Vector2 operator+ (Vector2 a, Vector2 b) {
     Vector2 result;
     result.x = a.x + b.x;
     result.y = a.y + b.y;
     return result;
 }
 
-Vector2 operator- (Vector2 a, Vector2 b) {
+inline Vector2 operator- (Vector2 a, Vector2 b) {
     Vector2 result;
     result.x = a.x - b.x;
     result.y = a.y - b.y;
     return result;
 }
 
-Vector2 operator* (Vector2 v, float f) {
+inline Vector2 operator* (Vector2 v, float f) {
     Vector2 result;
     result.x = v.x * f;
     result.y = v.y * f;
     return result;
 }
 
-Vector2 operator* (float f, Vector2 v) {
+inline Vector2 operator* (float f, Vector2 v) {
     Vector2 result;
     result.x = v.x * f;
     result.y = v.y * f;
     return result;
 }
 
-Vector2 operator/ (Vector2 v, float f) {
+inline Vector2 operator/ (Vector2 v, float f) {
     Vector2 result;
     result.x = v.x / f;
     result.y = v.y / f;
@@ -108,6 +107,29 @@ Vector2 operator/ (Vector2 v, float f) {
 }
 
 //Eq / Neq ==/!=
+
+inline float magnitude (Vector2 & v) {
+    return sqrt(v.x * v.x + v.y * v.y);
+}
+
+inline Vector2 normalize (Vector2 & v) {
+    Scalar m = magnitude(v);
+    if (m == Scalar{ 0 }) {
+        return Vector2{ 0, 0 };
+    }
+    return Vector2{ v.x / m, v.y / m };
+}
+
+inline float distSq (Vector2 & a, Vector2 & b) {
+    float dx = a.x - b.x, dy = a.y - b.y;
+    return (dx * dx + dy * dy);
+}
+
+inline float dist (Vector2 & a, Vector2 & b) {
+    return sqrt(distSq(a, b));
+}
+
+// ----------
 
 union Vector3 {
     struct { float x, y, z; };
