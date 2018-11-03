@@ -28,6 +28,16 @@ TEST(Vector2Test, Assignment)
     EXPECT_FLOAT_EQ(-1, v.y);
 }
 
+TEST(Vector2Test, UnaryNegation)
+{
+    Vector2 v{-1, 2};
+    EXPECT_FLOAT_EQ(1, (-v).x);
+    EXPECT_FLOAT_EQ(-2, (-v).y);
+    // v hasn't changed
+    EXPECT_FLOAT_EQ(-1, v.x);
+    EXPECT_FLOAT_EQ(2, v.y);
+}
+
 TEST(Vector2Test, ArithmeticAssignment)
 {
     // +=

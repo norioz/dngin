@@ -33,6 +33,7 @@ union Vector2 {
     const float & operator[] (size_t idx) const { return v[idx]; }
     float & operator[] (size_t idx) { return v[idx]; }
     Vector2 & operator= (Vector2 & other);
+    Vector2 operator- ();
     Vector2 & operator+= (const Vector2 & other);
     Vector2 & operator-= (const Vector2 & other);
     Vector2 & operator/= (float scalar);
@@ -43,6 +44,13 @@ Vector2 & Vector2::operator= (Vector2 & other) {
     x = other.x;
     y = other.y;
     return *this;
+}
+
+Vector2 Vector2::operator-() {
+    Vector2 v;
+    v.x = -x;
+    v.y = -y;
+    return v;
 }
 
 inline Vector2 & Vector2::operator+= (const Vector2 & other) {
