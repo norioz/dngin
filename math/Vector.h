@@ -3,11 +3,6 @@
 // ---------
 // Vector
 // ----------
-//scalar mul / div * /
-//binary add / sub + -
-//unary negation -
-//Eq / Neq ==/!=
-// ---
 //magnitude
 //normalize
 //dist
@@ -77,6 +72,42 @@ inline Vector2 & Vector2::operator/= (float scalar) {
     return *this;
 }
 
+Vector2 operator+ (Vector2 a, Vector2 b) {
+    Vector2 result;
+    result.x = a.x + b.x;
+    result.y = a.y + b.y;
+    return result;
+}
+
+Vector2 operator- (Vector2 a, Vector2 b) {
+    Vector2 result;
+    result.x = a.x - b.x;
+    result.y = a.y - b.y;
+    return result;
+}
+
+Vector2 operator* (Vector2 v, float f) {
+    Vector2 result;
+    result.x = v.x * f;
+    result.y = v.y * f;
+    return result;
+}
+
+Vector2 operator* (float f, Vector2 v) {
+    Vector2 result;
+    result.x = v.x * f;
+    result.y = v.y * f;
+    return result;
+}
+
+Vector2 operator/ (Vector2 v, float f) {
+    Vector2 result;
+    result.x = v.x / f;
+    result.y = v.y / f;
+    return result;
+}
+
+//Eq / Neq ==/!=
 
 union Vector3 {
     struct { float x, y, z; };

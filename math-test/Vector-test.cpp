@@ -61,3 +61,55 @@ TEST(Vector2Test, ArithmeticAssignment)
     EXPECT_FLOAT_EQ(45, vDE.x);
     EXPECT_FLOAT_EQ(-.1, vDE.y);
 }
+
+TEST(Vector2Test, ArithmeticOperators)
+{
+    // +
+    Vector2 vP0{ 1, 1 }, vP1{ 1, -2 };
+    Vector2 vPR = vP0 + vP1;
+    EXPECT_FLOAT_EQ(2, vPR.x);
+    EXPECT_FLOAT_EQ(-1, vPR.y);
+    // vP1 didn't change
+    EXPECT_FLOAT_EQ(1, vP1.x);
+    EXPECT_FLOAT_EQ(-2, vP1.y);
+    // vP0 didn't change
+    EXPECT_FLOAT_EQ(1, vP0.x);
+    EXPECT_FLOAT_EQ(1, vP0.y);
+
+    // -
+    Vector2 vM0{ 1, 1 }, vM1{ 1, -2 };
+    Vector2 vMR = vP0 - vP1;
+    EXPECT_FLOAT_EQ(0, vMR.x);
+    EXPECT_FLOAT_EQ(3, vMR.y);
+    // vM1 didn't change
+    EXPECT_FLOAT_EQ(1, vM1.x);
+    EXPECT_FLOAT_EQ(-2, vM1.y);
+    // vM0 didn't change
+    EXPECT_FLOAT_EQ(1, vM0.x);
+    EXPECT_FLOAT_EQ(1, vM0.y);
+
+    // *
+    Vector2 vT0{ -2, 8 };
+    Vector2 vTR = vT0 * 2;
+    EXPECT_FLOAT_EQ(-4, vTR.x);
+    EXPECT_FLOAT_EQ(16, vTR.y);
+    // vT0 didn't change
+    EXPECT_FLOAT_EQ(-2, vT0.x);
+    EXPECT_FLOAT_EQ(8, vT0.y);
+    // change the order of the operation
+    vTR = 3 * vT0;
+    EXPECT_FLOAT_EQ(-6, vTR.x);
+    EXPECT_FLOAT_EQ(24, vTR.y);
+    // vT0 didn't change
+    EXPECT_FLOAT_EQ(-2, vT0.x);
+    EXPECT_FLOAT_EQ(8, vT0.y);
+
+    // /
+    Vector2 vD0{ 3, 10 };
+    Vector2 vDR = vD0 / 2 ;
+    EXPECT_FLOAT_EQ(1.5, vDR.x);
+    EXPECT_FLOAT_EQ(5, vDR.y);
+    // vD0 didn't change
+    EXPECT_FLOAT_EQ(3, vD0.x);
+    EXPECT_FLOAT_EQ(10, vD0.y);
+}
