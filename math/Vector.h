@@ -6,20 +6,16 @@
 // ---------
 // Vector
 // ----------
-//convert to a float *
-//project   `
-//deproject `
+// convert to a float pointer (implicit conversion?) -- doc this
+// scalar projection - (dot product, maybe don't call it this)
+//cross product     `
+//projection   `
+//deproject -- vector rejection `
 //reflect   `
 //lerp      `
 //min / max   `
 //clamp     `
 //snap      `
-//cross     `
-// ---------
-//vec3 norm{ 5, 0, 0 };
-//norm = normalize(norm);
-//norm = norm.normalize();
-//EXPECT_EQ(vec3{ 1, 0, 0 }, norm);
 
 union Vector2 {
     struct { float x, y; };
@@ -106,7 +102,13 @@ inline Vector2 operator/ (Vector2 v, float f) {
     return result;
 }
 
-//Eq / Neq ==/!=
+inline bool operator== (Vector2 a, Vector2 & b) {
+    return Scalar(a.x) == Scalar(b.x) && Scalar(a.y) == Scalar(b.y);
+}
+
+inline bool operator!= (Vector2 & a, Vector2 & b) {
+    return !(a == b);
+}
 
 inline float magnitude (Vector2 & v) {
     return sqrt(v.x * v.x + v.y * v.y);

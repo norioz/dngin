@@ -11,6 +11,15 @@ TEST(Vector2Test, Init)
     EXPECT_FLOAT_EQ(3, v1.y);
 }
 
+TEST(Vector2Test, Equality)
+{
+    Vector2 v0{ 1, 2 }, v1{ -1, -1 }, v2{ -1, -1 };
+    EXPECT_TRUE(v0 != v1);
+    EXPECT_FALSE(v0 == v1);
+    EXPECT_FALSE(v1 != v2);
+    EXPECT_TRUE(v1 == v2);
+}
+
 TEST(Vector2Test, SubscriptOp)
 {
     Vector2 v{1, 2};
