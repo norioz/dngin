@@ -7,15 +7,6 @@
 // Vector
 // ----------
 // convert to a float pointer (implicit conversion?) -- doc this
-// scalar projection - (dot product, maybe don't call it this)
-//cross product     `
-//projection   `
-//deproject -- vector rejection `
-//reflect   `
-//lerp      `
-//min / max   `
-//clamp     `
-//snap      `
 
 union Vector2 {
     struct { float x, y; };
@@ -130,6 +121,39 @@ inline float distSq (Vector2 & a, Vector2 & b) {
 inline float dist (Vector2 & a, Vector2 & b) {
     return sqrt(distSq(a, b));
 }
+
+//min
+Vector2 min (Vector2 & a, Vector2 & b) {
+    return Vector2{ min(a.x, b.x), min(a.y, b.y) };
+}
+
+template<typename... Args>
+Vector2 min (Vector2 & a, Vector2 & b, Args... args) {
+    return min(min(a, b), args...);
+}
+
+// max
+Vector2 max (Vector2 & a, Vector2 & b) {
+    return Vector2{ max(a.x, b.x), max(a.y, b.y) };
+}
+
+template<typename... Args>
+Vector2 max (Vector2 & a, Vector2 b, Args... args) {
+    return max(max(a, b), args...);
+}
+
+// Scalar product - dot product
+//float sprod (Vector2 a, Vector2 b) {
+//
+//}
+
+//cross product     `
+//projection   `
+//deproject -- vector rejection `
+//reflect   `
+//lerp      `
+//clamp     `
+//snap      `
 
 // ----------
 
