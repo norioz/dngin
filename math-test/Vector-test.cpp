@@ -174,3 +174,27 @@ TEST(Vector2Test, ScalarProduct)
     EXPECT_FLOAT_EQ(9, sprod(Vector2{ -1, 2 }, Vector2{ 1, 5 }));
     EXPECT_FLOAT_EQ(-9.4, sprod(Vector2{ 1, -5.2 }, Vector2{ 1, 2 }));
 }
+
+TEST(Vector2Test, Projection)
+{
+    expectVectorValues(1.8, 3.6, project(Vector2{ -1, 5 }, Vector2{ 2, 4 }));
+    expectVectorValues(-2.6, -5.2, project(Vector2{ 3, -8 }, Vector2{ 1, 2 }));
+    // projection using zero vectors results in zero vectors
+    expectVectorValues(0, 0, project(Vector2{ -1, 5 }, Vector2{ 0, 0 }));
+    expectVectorValues(0, 0, project(Vector2{ 0, 0 }, Vector2{ 2, 4 }));
+}
+
+TEST(Vector2Test, Deprojection)
+{
+    Vector2 b{ 2, 4 }, a{ -1, 5 };
+    Vector2 proj = project(a, b);
+    Vector2 expected = a - proj;
+    expectVectorValues(expected.x, expected.y, deproject(a, b));
+    a = Vector2{ 1, 2 }; b = Vector2{ 3, -8 };
+    proj = project(a, b);
+    expected = a - proj;
+    expectVectorValues(expected.x, expected.y, deproject(a, b));
+    // deprojection using zero vectors results in zero vectors
+    expectVectorValues(0, 0, project(Vector2{ -1, 5 }, Vector2{ 0, 0 }));
+    expectVectorValues(0, 0, project(Vector2{ 0, 0 }, Vector2{ 2, 4 }));
+}

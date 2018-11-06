@@ -101,8 +101,12 @@ inline bool operator!= (Vector2 & a, Vector2 & b) {
     return !(a == b);
 }
 
+inline float magnitudeSq (Vector2 & v) {
+    return v.x * v.x + v.y * v.y;
+}
+
 inline float magnitude (Vector2 & v) {
-    return sqrt(v.x * v.x + v.y * v.y);
+    return sqrt(magnitudeSq(v));
 }
 
 inline Vector2 normalize (Vector2 & v) {
@@ -147,13 +151,33 @@ float sprod (Vector2 a, Vector2 b) {
     return a.x * b.x + a.y * b.y;
 }
 
-//projection   `
-//deproject -- vector rejection `
+// projection
+// project a onto b
+Vector2 project (Vector2 & a, Vector2 & b) {
+    float bMSq = magnitudeSq(b);
+    if (Scalar(bMSq) == Scalar(0)) {
+        return Vector2{ 0, 0 };
+    }
+    return b * (sprod(b, a) / bMSq);
+}
 
-//reflect   `
-//lerp      `
-//clamp     `
-//snap      `
+// deprojection -- vector rejection
+// deproject a onto b
+Vector2 deproject (Vector2 & a, Vector2 & b) {
+    Vector2 p = project(a, b);
+    return a - p;
+}
+
+//reflect
+// n := surface normal vector (unit vector)
+// d := incoming vector
+// r := reflection vector
+// r = d - ((2d * n) / |n|^2) * n
+
+//clamp
+//snap
+
+//lerp
 
 // ----------
 
