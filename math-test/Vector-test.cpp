@@ -162,3 +162,15 @@ TEST(Vector2Test, Max)
     result = max(Vector2{ 1, 2 }, Vector2{ 0, 0 }, Vector2{ -1, -1 }, Vector2{ -2, -2 });
     expectVectorValues(1, 2, result);
 }
+
+TEST(Vector2Test, ScalarProduct)
+{
+    EXPECT_FLOAT_EQ(11, sprod(Vector2{ 1, 2 }, Vector2{1, 5}));
+    EXPECT_FLOAT_EQ(11, sprod(Vector2{ 1, 5 }, Vector2{ 1, 2 }));
+    // Scalar product with a zero vector results in zero.
+    EXPECT_FLOAT_EQ(0, sprod(Vector2{ -1, 2 }, Vector2{ 0, 0 }));
+    EXPECT_FLOAT_EQ(0, sprod(Vector2{ 0, 0 }, Vector2{ 5, 12 }));
+    // negative values
+    EXPECT_FLOAT_EQ(9, sprod(Vector2{ -1, 2 }, Vector2{ 1, 5 }));
+    EXPECT_FLOAT_EQ(-9.4, sprod(Vector2{ 1, -5.2 }, Vector2{ 1, 2 }));
+}

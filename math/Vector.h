@@ -143,13 +143,13 @@ Vector2 max (Vector2 & a, Vector2 b, Args... args) {
 }
 
 // Scalar product - dot product
-//float sprod (Vector2 a, Vector2 b) {
-//
-//}
+float sprod (Vector2 a, Vector2 b) {
+    return a.x * b.x + a.y * b.y;
+}
 
-//cross product     `
 //projection   `
 //deproject -- vector rejection `
+
 //reflect   `
 //lerp      `
 //clamp     `
@@ -186,3 +186,6 @@ inline Vector3 & Vector3::operator/= (float scalar) {
     // UNIMPLEMENTED
     return *this;
 }
+
+//cross product
+
