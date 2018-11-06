@@ -106,7 +106,7 @@ inline float magnitudeSq (Vector2 & v) {
 }
 
 inline float magnitude (Vector2 & v) {
-    return sqrt(magnitudeSq(v));
+    return sqrtf(magnitudeSq(v));
 }
 
 inline Vector2 normalize (Vector2 & v) {
@@ -123,7 +123,7 @@ inline float distSq (Vector2 & a, Vector2 & b) {
 }
 
 inline float dist (Vector2 & a, Vector2 & b) {
-    return sqrt(distSq(a, b));
+    return sqrtf(distSq(a, b));
 }
 
 //min
@@ -169,10 +169,25 @@ Vector2 deproject (Vector2 & a, Vector2 & b) {
 }
 
 //reflect
-// n := surface normal vector (unit vector)
-// d := incoming vector
-// r := reflection vector
-// r = d - ((2d * n) / |n|^2) * n
+// n := normal vector
+// i := incident vector
+// Credit: HLSL documentation; GLSL spec documentation
+Vector2 reflect (Vector2 & i, Vector2 & n) {
+    return i - 2.f * sprod(i, n) * n;
+}
+
+// refract
+// o := incident
+// n := normal
+// eta := refraction index
+Vector2 refract (Vector2 & i, Vector2 & n, float eta) {
+    float nDotI = sprod(n, i);
+    float k = 1.f - eta * eta * (1.f - nDotI * nDotI);
+    if (k < 0.f) {
+        return Vector2{0, 0};
+    }
+    return eta * i - (eta * nDotI + sqrtf(k)) * n;
+}
 
 //clamp
 //snap

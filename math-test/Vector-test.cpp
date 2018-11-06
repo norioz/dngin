@@ -198,3 +198,15 @@ TEST(Vector2Test, Deprojection)
     expectVectorValues(0, 0, project(Vector2{ -1, 5 }, Vector2{ 0, 0 }));
     expectVectorValues(0, 0, project(Vector2{ 0, 0 }, Vector2{ 2, 4 }));
 }
+
+TEST(Vector2Test, Reflection)
+{
+    Vector2 i{-2, 0}, n{1, 1};
+    expectVectorValues(2, 4, reflect(i, n));
+}
+
+TEST(Vector2Test, Refraction)
+{
+    Vector2 i{ -2, 0 }, n{ 1, 1 };
+    expectVectorValues(-2.7838821, 0.21611786, refract(i, n, 1.5));
+}
