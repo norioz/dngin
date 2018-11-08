@@ -23,7 +23,8 @@
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scalar.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="internal.cpp" />

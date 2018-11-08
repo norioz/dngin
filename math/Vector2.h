@@ -190,41 +190,30 @@ Vector2 refract (Vector2 & i, Vector2 & n, float eta) {
 }
 
 //clamp
+// Constrains the magnitude of the vector to less than or
+// equal to the passed in magnitude (maxLength).
+Vector2 clamp (Vector2 & v, float maxLength) {
+    float mag = magnitude(v);
+    Vector2 result = v;
+    if (mag > maxLength) {
+        (result / mag) * maxLength;
+    }
+    return result;
+}
+
 //snap
-
-//lerp
-
-// ----------
-
-union Vector3 {
-    struct { float x, y, z; };
-    const float & operator[] (size_t idx) const { }
-    float & operator[] (size_t idx) { }
-    Vector3 & operator+= (const Vector3 & other);
-    Vector3 & operator-= (const Vector3 & other);
-    Vector3 & operator/= (float scalar);
-    Vector3 & operator*= (float scalar);
-};
-
-inline Vector3 & Vector3::operator+= (const Vector3 & other) {
-    // UNIMPLEMENTED
-    return *this;
+Vector2 snap (Vector2 & v, Vector2 & a, Vector2 & b) {
+    return Vector2{ snap(v.x, a.x, b.x), snap(v.y, a.y, b.y) };
 }
 
-inline Vector3 & Vector3::operator-= (const Vector3 & other) {
-    // UNIMPLEMENTED
-    return *this;
-}
+// lerp
 
-inline Vector3 & Vector3::operator*= (float scalar) {
-    // UNIMPLEMENTED
-    return *this;
-}
-
-inline Vector3 & Vector3::operator/= (float scalar) {
-    // UNIMPLEMENTED
-    return *this;
-}
-
-//cross product
-
+// slerp
+// Spherically interpolates between two vectors.
+// Interpolates between a and b by amount t.
+// The direction of the returned vector is interpolated by the angle
+// and its magnitude is the interpolation beteen the magnitudes of a
+// and b.
+//Vector2 slerp (Vector2 & a, Vector2 & b) {
+//    
+//}

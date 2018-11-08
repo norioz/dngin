@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../math/Vector.h"
+#include "../math/Vector2.h"
 
 void expectVectorValues(float x, float y, Vector2 & v) {
     EXPECT_FLOAT_EQ(x, v.x);
