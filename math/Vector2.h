@@ -189,10 +189,16 @@ Vector2 refract (Vector2 & i, Vector2 & n, float eta) {
     return eta * i - (eta * nDotI + sqrtf(k)) * n;
 }
 
-//clamp
+// clamp
+// component wise clamp
+Vector2 clamp (Vector2 & v, Vector2 & low, Vector2 & high) {
+    return Vector2{ clamp(v.x, low.x, high.x), clamp(v.y, low.y, high.y) };
+}
+
+//clampM
 // Constrains the magnitude of the vector to less than or
 // equal to the passed in magnitude (maxLength).
-Vector2 clamp (Vector2 & v, float maxLength) {
+Vector2 clampM (Vector2 & v, float maxLength) {
     float mag = magnitude(v);
     Vector2 result = v;
     if (mag > maxLength) {
@@ -202,11 +208,15 @@ Vector2 clamp (Vector2 & v, float maxLength) {
 }
 
 //snap
-Vector2 snap (Vector2 & v, Vector2 & a, Vector2 & b) {
-    return Vector2{ snap(v.x, a.x, b.x), snap(v.y, a.y, b.y) };
+Vector2 snap (Vector2 & v, Vector2 & low, Vector2 & high) {
+    return Vector2{ snap(v.x, low.x, high.x), snap(v.y, low.y, high.y) };
 }
 
 // lerp
+// component wise lerp
+Vector2 lerp (Vector2 & a, Vector2 & b, float t) {
+    return Vector2{ lerp(a.x, b.x, t), lerp(a.y, b.y, t) };
+}
 
 // slerp
 // Spherically interpolates between two vectors.
