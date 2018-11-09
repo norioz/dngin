@@ -15,6 +15,14 @@ union Vector3 {
     Vector3 operator- ();
 };
 
+inline Vector3 Vector3::operator-() {
+    Vector3 v;
+    v.x = -x;
+    v.y = -y;
+    v.z = -z;
+    return v;
+}
+
 inline Vector3 & Vector3::operator= (const Vector3 & other) {
     x = other.x;
     y = other.y;
@@ -201,11 +209,12 @@ Vector3 refract (Vector3 & i, Vector3 & n, float eta) {
     return eta * i - (eta * nDotI + sqrtf(k)) * n;
 }
 
-//clamp
+//clampM
 // Constrains the magnitude of the vector to less than or
 // equal to the passed in magnitude (maxLength).
 Vector3 clamp (Vector3 & v, float maxLength) {
     // UNIMPLEMENTED
+    return Vector3{};
 }
 
 //snap

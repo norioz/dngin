@@ -21,6 +21,13 @@ union Vector2 {
     Vector2 & operator*= (float scalar);
 };
 
+inline Vector2 Vector2::operator- () {
+    Vector2 v;
+    v.x = -x;
+    v.y = -y;
+    return v;
+}
+
 inline Vector2 & Vector2::operator= (Vector2 & other) {
     x = other.x;
     y = other.y;
@@ -56,13 +63,6 @@ inline Vector2 operator+ (Vector2 a, Vector2 b) {
     result.x = a.x + b.x;
     result.y = a.y + b.y;
     return result;
-}
-
-inline Vector2 Vector2::operator-() {
-    Vector2 v;
-    v.x = -x;
-    v.y = -y;
-    return v;
 }
 
 inline Vector2 operator- (Vector2 a, Vector2 b) {
