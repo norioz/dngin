@@ -106,34 +106,29 @@ inline bool operator!= (Vector3 & a, Vector3 & b) {
 
 // magnitude
 inline float magnitudeSq (Vector3 & v) {
-    // UNIMPLEMENTED
-    return v.x * v.x + v.y * v.y;
+    return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 inline float magnitude (Vector3 & v) {
-    // UNIMPLEMENTED
     return sqrtf(magnitudeSq(v));
 }
 
-// norm
+// normalize
 inline Vector3 normalize (Vector3 & v) {
-    // UNIMPLEMENTED
     Scalar m = magnitude(v);
     if (m == Scalar{ 0 }) {
-        return Vector3{ 0, 0 };
+        return Vector3{ 0, 0, 0 };
     }
-    return Vector3{ v.x / m, v.y / m };
+    return Vector3{ v.x / m, v.y / m, v.z / m};
 }
 
 // distance
 inline float distSq (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
-    float dx = a.x - b.x, dy = a.y - b.y;
-    return (dx * dx + dy * dy);
+    float dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+    return (dx * dx + dy * dy + dz * dz);
 }
 
 inline float dist (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
     return sqrtf(distSq(a, b));
 }
 
