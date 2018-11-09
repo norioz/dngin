@@ -16,80 +16,87 @@ union Vector3 {
 };
 
 inline Vector3 & Vector3::operator= (const Vector3 & other) {
-    // UNIMPLEMENTED
+    x = other.x;
+    y = other.y;
+    z = other.z;
     return *this;
 }
 
 inline Vector3 & Vector3::operator+= (const Vector3 & other) {
-    // UNIMPLEMENTED
+    x += other.x;
+    y += other.y;
+    z += other.z;
     return *this;
 }
 
 inline Vector3 & Vector3::operator-= (const Vector3 & other) {
-    // UNIMPLEMENTED
+    x -= other.x;
+    y -= other.y;
+    z -= other.z;
     return *this;
 }
 
 inline Vector3 & Vector3::operator*= (float scalar) {
-    // UNIMPLEMENTED
+    x *= scalar;
+    y *= scalar;
+    z *= scalar;
     return *this;
 }
 
 inline Vector3 & Vector3::operator/= (float scalar) {
-    // UNIMPLEMENTED
+    x /= scalar;
+    y /= scalar;
+    z /= scalar;
     return *this;
 }
 
 inline Vector3 operator+ (Vector3 a, Vector3 b) {
-    // UNIMPLEMENTED
     Vector3 result;
     result.x = a.x + b.x;
     result.y = a.y + b.y;
+    result.z = a.z + b.z;
     return result;
 }
 
 inline Vector3 operator- (Vector3 a, Vector3 b) {
-    // UNIMPLEMENTED
     Vector3 result;
     result.x = a.x - b.x;
     result.y = a.y - b.y;
+    result.z = a.z - b.z;
     return result;
 }
 
 inline Vector3 operator* (Vector3 v, float f) {
-    // UNIMPLEMENTED
     Vector3 result;
     result.x = v.x * f;
     result.y = v.y * f;
+    result.z = v.z * f;
     return result;
 }
 
 inline Vector3 operator* (float f, Vector3 v) {
-    // UNIMPLEMENTED
-    Vector3 result;
-    result.x = v.x * f;
-    result.y = v.y * f;
-    return result;
+    return v * f;
 }
 
 inline Vector3 operator/ (Vector3 v, float f) {
-    // UNIMPLEMENTED
     Vector3 result;
     result.x = v.x / f;
     result.y = v.y / f;
+    result.z = v.z / f;
     return result;
 }
 
 inline bool operator== (Vector3 a, Vector3 & b) {
-    // UNIMPLEMENTED
-    return Scalar(a.x) == Scalar(b.x) && Scalar(a.y) == Scalar(b.y);
+    return Scalar(a.x) == Scalar(b.x) &&
+        Scalar(a.y) == Scalar(b.y) &&
+        Scalar(a.z) == Scalar(b.z);
 }
 
 inline bool operator!= (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
     return !(a == b);
 }
 
+// magnitude
 inline float magnitudeSq (Vector3 & v) {
     // UNIMPLEMENTED
     return v.x * v.x + v.y * v.y;
@@ -100,6 +107,7 @@ inline float magnitude (Vector3 & v) {
     return sqrtf(magnitudeSq(v));
 }
 
+// norm
 inline Vector3 normalize (Vector3 & v) {
     // UNIMPLEMENTED
     Scalar m = magnitude(v);
@@ -109,6 +117,7 @@ inline Vector3 normalize (Vector3 & v) {
     return Vector3{ v.x / m, v.y / m };
 }
 
+// distance
 inline float distSq (Vector3 & a, Vector3 & b) {
     // UNIMPLEMENTED
     float dx = a.x - b.x, dy = a.y - b.y;

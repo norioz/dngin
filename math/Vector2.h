@@ -27,13 +27,6 @@ inline Vector2 & Vector2::operator= (Vector2 & other) {
     return *this;
 }
 
-inline Vector2 Vector2::operator-() {
-    Vector2 v;
-    v.x = -x;
-    v.y = -y;
-    return v;
-}
-
 inline Vector2 & Vector2::operator+= (const Vector2 & other) {
     x += other.x;
     y += other.y;
@@ -63,6 +56,13 @@ inline Vector2 operator+ (Vector2 a, Vector2 b) {
     result.x = a.x + b.x;
     result.y = a.y + b.y;
     return result;
+}
+
+inline Vector2 Vector2::operator-() {
+    Vector2 v;
+    v.x = -x;
+    v.y = -y;
+    return v;
 }
 
 inline Vector2 operator- (Vector2 a, Vector2 b) {
@@ -101,6 +101,7 @@ inline bool operator!= (Vector2 & a, Vector2 & b) {
     return !(a == b);
 }
 
+// magnitude
 inline float magnitudeSq (Vector2 & v) {
     return v.x * v.x + v.y * v.y;
 }
@@ -109,6 +110,7 @@ inline float magnitude (Vector2 & v) {
     return sqrtf(magnitudeSq(v));
 }
 
+// normalize
 inline Vector2 normalize (Vector2 & v) {
     Scalar m = magnitude(v);
     if (m == Scalar{ 0 }) {
@@ -117,6 +119,7 @@ inline Vector2 normalize (Vector2 & v) {
     return Vector2{ v.x / m, v.y / m };
 }
 
+// distance
 inline float distSq (Vector2 & a, Vector2 & b) {
     float dx = a.x - b.x, dy = a.y - b.y;
     return (dx * dx + dy * dy);
