@@ -149,3 +149,21 @@ TEST(Vector3Test, DistanceSquared)
     // distance squared between a vector and itself is zero
     EXPECT_FLOAT_EQ(0, distSq(v1, v1));
 }
+
+TEST(Vector3Test, Min)
+{
+    Vector3 result;
+    result = min(Vector3{ 1, 2, 4.1 }, Vector3{ 2, 1, 4.2 });
+    expectVector3Values(1, 1, 4.1, result);
+    result = min(Vector3{ 1, 2, -1.1 }, Vector3{ 0, 0, 0 }, Vector3{ -1, -1, -1 }, Vector3{ -2, -2, -2 });
+    expectVector3Values(-2, -2, -2, result);
+}
+
+TEST(Vector3Test, Max)
+{
+    Vector3 result;
+    result = max(Vector3{ 1, 2, 4.1 }, Vector3{ 2, 1, 4.2 });
+    expectVector3Values(2, 2, 4.2, result);
+    result = max(Vector3{ 1, 2, -1.1 }, Vector3{ 0, 0, 0 }, Vector3{ -1, -1, -1 }, Vector3{ -2, -2, -2 });
+    expectVector3Values(1, 2, 0, result);
+}

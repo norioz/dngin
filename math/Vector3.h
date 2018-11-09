@@ -134,25 +134,21 @@ inline float dist (Vector3 & a, Vector3 & b) {
 
 //min
 Vector3 min (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
-    return Vector3{ min(a.x, b.x), min(a.y, b.y) };
+    return Vector3{ min(a.x, b.x), min(a.y, b.y), min(a.z, b.z) };
 }
 
 template<typename... Args>
 Vector3 min (Vector3 & a, Vector3 & b, Args... args) {
-    // UNIMPLEMENTED
     return min(min(a, b), args...);
 }
 
 // max
 Vector3 max (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
-    return Vector3{ max(a.x, b.x), max(a.y, b.y) };
+    return Vector3{ max(a.x, b.x), max(a.y, b.y), max(a.z, b.z) };
 }
 
 template<typename... Args>
 Vector3 max (Vector3 & a, Vector3 b, Args... args) {
-    // UNIMPLEMENTED
     return max(max(a, b), args...);
 }
 
@@ -160,6 +156,12 @@ Vector3 max (Vector3 & a, Vector3 b, Args... args) {
 float sprod (Vector3 a, Vector3 b) {
     // UNIMPLEMENTED
     return a.x * b.x + a.y * b.y;
+}
+
+Vector3 cross (Vector3 a, Vector3 b) {
+    // UNIMPLEMENTED
+    Vector3 result;
+    return result;
 }
 
 // projection
