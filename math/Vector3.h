@@ -167,18 +167,16 @@ Vector3 cross (Vector3 a, Vector3 b) {
 // projection
 // project a onto b
 Vector3 project (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
-    float bMSq = magnitudeSq(b);
-    if (Scalar(bMSq) == Scalar(0)) {
-        return Vector3{ 0, 0 };
+    float bb = sprod(b, b);
+    if (Scalar(bb) == Scalar(0)) {
+        return Vector3{ 0, 0, 0 };
     }
-    return b * (sprod(b, a) / bMSq);
+    return (sprod(a, b) / bb) * b;
 }
 
 // deprojection -- vector rejection
 // deproject a onto b
 Vector3 deproject (Vector3 & a, Vector3 & b) {
-    // UNIMPLEMENTED
     Vector3 p = project(a, b);
     return a - p;
 }

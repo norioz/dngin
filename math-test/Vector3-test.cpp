@@ -192,3 +192,27 @@ TEST(Vector3Test, CrossProduct)
     expectVector3Values(0, 0, 0, cross(v0, v1));
     expectVector3Values(0, 0, 0, cross(v1, v0));
 }
+
+TEST(Vector3Test, Projection)
+{
+    expectVector3Values(0.5, 0, 1.5, project(Vector3{ -1, 4, 2 }, Vector3{ 1, 0, 3 }));
+    expectVector3Values(-1.0588235, -1.4117647, 1.0588235, project(Vector3{ 2, 0, 6 }, Vector3{ 3, 4, -3 }));
+    // projection using zero vectors results in zero vectors
+    expectVector3Values(0, 0, 0, project(Vector3{ 0, 0, 0 }, Vector3{ -1, 5, 1.1 }));
+    expectVector3Values(0, 0, 0, project(Vector3{ 2, 4, -5.2 }, Vector3{ 0, 0, 0 }));
+}
+
+TEST(Vector3Test, Deprojection)
+{
+    Vector3 b{ 2, 4, -7 }, a{ -1, 5, 1.1 };
+    Vector3 proj = project(a, b);
+    Vector3 expected = a - proj;
+    expectVector3Values(expected.x, expected.y, expected.z, deproject(a, b));
+    a = Vector3{ 1, 2, -0.2 }; b = Vector3{ 3, -8, 0 };
+    proj = project(a, b);
+    expected = a - proj;
+    expectVector3Values(expected.x, expected.y, expected.z, deproject(a, b));
+    // deprojection using zero vectors results in zero vectors
+    expectVector3Values(0, 0, 0, project(Vector3{ -1, 5 }, Vector3{ 0, 0, 0 }));
+    expectVector3Values(0, 0, 0, project(Vector3{ 0, 0, 0 }, Vector3{ 2, 4 }));
+}

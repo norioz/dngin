@@ -157,11 +157,11 @@ float sprod (Vector2 a, Vector2 b) {
 // projection
 // project a onto b
 Vector2 project (Vector2 & a, Vector2 & b) {
-    float bMSq = magnitudeSq(b);
-    if (Scalar(bMSq) == Scalar(0)) {
+    float bb = sprod(b, b);
+    if (Scalar(bb) == Scalar(0)) {
         return Vector2{ 0, 0 };
     }
-    return b * (sprod(b, a) / bMSq);
+    return (sprod(a, b) / bb) * b;
 }
 
 // deprojection -- vector rejection
