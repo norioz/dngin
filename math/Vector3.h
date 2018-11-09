@@ -186,7 +186,6 @@ Vector3 deproject (Vector3 & a, Vector3 & b) {
 // i := incident vector
 // Credit: HLSL documentation; GLSL spec documentation
 Vector3 reflect (Vector3 & i, Vector3 & n) {
-    // UNIMPLEMENTED
     return i - 2.f * sprod(i, n) * n;
 }
 
@@ -195,11 +194,10 @@ Vector3 reflect (Vector3 & i, Vector3 & n) {
 // n := normal
 // eta := refraction index
 Vector3 refract (Vector3 & i, Vector3 & n, float eta) {
-    // UNIMPLEMENTED
     float nDotI = sprod(n, i);
     float k = 1.f - eta * eta * (1.f - nDotI * nDotI);
     if (k < 0.f) {
-        return Vector3{ 0, 0 };
+        return Vector3{ 0, 0, 0 };
     }
     return eta * i - (eta * nDotI + sqrtf(k)) * n;
 }

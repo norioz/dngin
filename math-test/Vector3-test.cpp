@@ -216,3 +216,15 @@ TEST(Vector3Test, Deprojection)
     expectVector3Values(0, 0, 0, project(Vector3{ -1, 5 }, Vector3{ 0, 0, 0 }));
     expectVector3Values(0, 0, 0, project(Vector3{ 0, 0, 0 }, Vector3{ 2, 4 }));
 }
+
+TEST(Vector3Test, Reflection)
+{
+    Vector3 i{ -2, 0, 1 }, n{ 1, 1, 1 };
+    expectVector3Values(0, 2, 3, reflect(i, n));
+}
+
+TEST(Vector3Test, Refraction)
+{
+    Vector3 i{ -2, 0, 1 }, n{ 1, 1, 1 };
+    expectVector3Values(-2.5, 0.5, 2, refract(i, n, 1.5));
+}
