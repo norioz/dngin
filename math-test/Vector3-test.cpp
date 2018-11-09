@@ -167,3 +167,28 @@ TEST(Vector3Test, Max)
     result = max(Vector3{ 1, 2, -1.1 }, Vector3{ 0, 0, 0 }, Vector3{ -1, -1, -1 }, Vector3{ -2, -2, -2 });
     expectVector3Values(1, 2, 0, result);
 }
+
+TEST(Vector3Test, ScalarProduct)
+{
+    // order of vectors doesn't matter
+    EXPECT_FLOAT_EQ(20, sprod(Vector3{ 1, 2, 3 }, Vector3{ 1, 5, 3 }));
+    EXPECT_FLOAT_EQ(20, sprod(Vector3{ 1, 5, 3 }, Vector3{ 1, 2, 3 }));
+    // scalar product with a zero vector results in zeros
+    EXPECT_FLOAT_EQ(0, sprod(Vector3{ -1, 2, 1000 }, Vector3{ 0, 0, 0 }));
+    EXPECT_FLOAT_EQ(0, sprod(Vector3{ 0, 0, 0 }, Vector3{ 5, 12, -111 }));
+    // negative values
+    EXPECT_FLOAT_EQ(18, sprod(Vector3{ -1, 2, 3 }, Vector3{ 1, 5, 3 }));
+    EXPECT_FLOAT_EQ(-7.4, sprod(Vector3{ 1, -5.2, 2 }, Vector3{ 1, 2, 1 }));
+}
+
+TEST(Vector3Test, CrossProduct)
+{
+    Vector3 v0{ 1, 2, 3 }, v1{ 1, 5, 7 };
+    expectVector3Values(-1, -4, 3, cross(v0, v1));
+    // order matters
+    expectVector3Values(1, 4, -3, cross(v1, v0));
+    // cross with a zero vector
+    v0.x = 0, v0.y = 0, v0.z = 0;
+    expectVector3Values(0, 0, 0, cross(v0, v1));
+    expectVector3Values(0, 0, 0, cross(v1, v0));
+}
