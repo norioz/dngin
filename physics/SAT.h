@@ -88,6 +88,43 @@ struct Shape {
     Vector2 vertices[MAX_SHAPE_SIZE];
 };
 
+struct AxisProjection {
+    Scalar min, max;
+};
+
+// find shape edge normals, these are the axis
+void determineAxis (Shape a, Vector2 rAxis[], int startIdx) {
+    for (int i = 0; i < a.size; ++i) {
+        const Vector2 & current = a.vertices[i];
+        const Vector2 & next = (i == a.size - 1) ? a.vertices[0] : a.vertices[i + 1];
+        Vector2 edge = current - next;
+        Vector2 axis = perpendicular(edge);
+        rAxis[startIdx + i] = axis;
+    }
+}
+
+// project shapes onto axis to find extents
+AxisProjection findExtents (Shape a, const Vector2 & axis, Vector2 & rMinExtent, Vector2 & rMaxExtent) {
+    float min = sprod(axis, a.vertices[0]);
+    float max = min;
+    for (int i = 0; i < a.size; ++i) {
+        float m = sprod(axis, a.vertices[i]);
+        if (m < min) {
+            min = m;
+        }
+        if (m > max) {
+            max = m;
+        }
+    }
+    return AxisProjection{ min, max };
+}
+
+// compare extents
+// a negative number is a separation distance
+Scalar findOverlap (AxisProjection & aExtents, AxisProjection & bExtents) {
+    return Scalar(0);
+}
+
 // Find the shortest direction / distance we need to move one object so
 // that neither will be in collision - this is the Minimum Translation 
 // Vector (MTV).
@@ -102,10 +139,10 @@ Vector2 findMTV (Shape a, Shape b) {
     for (int i = 0; i < axisCount; ++i) {
         Vector2 currentAxis = axis[i];
         Vector2 aMin, aMax, bMin, bMax;
-        findExtents(a, currentAxis, aMin, aMax);
-        findExtents(b, currentAxis, bMin, bMax);
-        Scalar overlap = findOverlap(aMin, aMax, bMin, bMax);
-        if (overlap < 0) {
+        AxisProjection aExtents = findExtents(a, currentAxis, aMin, aMax);
+        AxisProjection bExtents = findExtents(b, currentAxis, bMin, bMax);
+        Scalar overlap = findOverlap(aExtents, bExtents);
+        if (overlap < Scalar(0)) {
             // they aren't overlapping
             return Vector2{ 0, 0 };  // ??? what should we return here?
         }
@@ -117,27 +154,4 @@ Vector2 findMTV (Shape a, Shape b) {
 
     // a little painful because of the sqrt
     return normalize(axis[minAxisIdx]) * minOverlap;
-}
-
-// find shape edge normals, these are the axis
-int determineAxis (Shape a, Vector2 rAxis[], int startIdx) {
-    for (int i = 0; i < a.size; ++i) {
-        const Vector2 & current = a.vertices[i];
-        const Vector2 & next = (i == a.size - 1) ? a.vertices[0] : a.vertices[i + 1];
-        Vector2 edge = current - next;
-        Vector2 axis = perpendicular(edge);
-        rAxis[startIdx + i] = axis;
-    }
-}
-
-// project shapes onto axis to find extents
-void findExtents (Shape a, const Vector2 axis, Vector2 & rMinExtent, Vector2 & rMaxExtent) {
-    // UNIMPLEMENTED
-}
-
-// compare extents
-// a negative number is a separation distance
-Scalar findOverlap (const Vector2 & aMin, const Vector2 & aMax, const Vector2 & bMin, const Vector2 & bMax) {
-    // UNIMPLEMENTED
-    return Scalar(0);
 }
