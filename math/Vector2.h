@@ -119,6 +119,14 @@ inline Vector2 normalize (Vector2 & v) {
     return Vector2{ v.x / m, v.y / m };
 }
 
+// perpendicular
+// Returns a vector that is perpendicular to the given vector.
+// Direction is no considerred.
+// (x, y) = > (-y, x)
+inline Vector2 perpendicular (Vector2 & v) {
+    return Vector2{ -v.y, v.x };
+}
+
 // distance
 inline float distSq (Vector2 & a, Vector2 & b) {
     float dx = a.x - b.x, dy = a.y - b.y;
