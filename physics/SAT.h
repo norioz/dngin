@@ -99,12 +99,12 @@ void determineAxis (Shape a, Vector2 rAxis[], int startIdx) {
         const Vector2 & next = (i == a.size - 1) ? a.vertices[0] : a.vertices[i + 1];
         Vector2 edge = current - next;
         Vector2 axis = perpendicular(edge);
-        rAxis[startIdx + i] = axis;
+        rAxis[startIdx + i] = normalize(axis);
     }
 }
 
 // project shapes onto axis to find extents
-AxisProjection findExtents (Shape a, const Vector2 & axis, Vector2 & rMinExtent, Vector2 & rMaxExtent) {
+AxisProjection findExtents (Shape a, const Vector2 & axis) {
     float min = sprod(axis, a.vertices[0]);
     float max = min;
     for (int i = 0; i < a.size; ++i) {
@@ -119,39 +119,57 @@ AxisProjection findExtents (Shape a, const Vector2 & axis, Vector2 & rMinExtent,
     return AxisProjection{ min, max };
 }
 
+// handedness
+// returns true if A is on the left along the axis
+bool isOnLeft(AxisProjection aP, AxisProjection bP) {
+    return aP.min < bP.min;
+}
+
 // compare extents
 // a negative number is a separation distance
-Scalar findOverlap (AxisProjection & aExtents, AxisProjection & bExtents) {
-    return Scalar(0);
+Scalar findOverlap (AxisProjection & aP, AxisProjection & bP) {
+    return aP.max - bP.min;
 }
 
 // Find the shortest direction / distance we need to move one object so
 // that neither will be in collision - this is the Minimum Translation 
 // Vector (MTV).
-Vector2 findMTV (Shape a, Shape b) {
+Vector2 MTV (Shape a, Shape b) {
     Vector2 axis[MAX_SHAPE_SIZE];
+
+    // find all axis vectors
     int axisCount = a.size + b.size;
     determineAxis(a, axis, 0);
     determineAxis(b, axis, a.size);
 
+    // keep track of the axis with the min overlap
     int minAxisIdx = -1;
     Scalar minOverlap = 10000;
+
+    // loop through axis, updating the min
     for (int i = 0; i < axisCount; ++i) {
-        Vector2 currentAxis = axis[i];
-        Vector2 aMin, aMax, bMin, bMax;
-        AxisProjection aExtents = findExtents(a, currentAxis, aMin, aMax);
-        AxisProjection bExtents = findExtents(b, currentAxis, bMin, bMax);
-        Scalar overlap = findOverlap(aExtents, bExtents);
+        Vector2 & currentAxis = axis[i];
+
+        // find the extents for each shape on the current axis
+        AxisProjection aExtents = findExtents(a, currentAxis);
+        AxisProjection bExtents = findExtents(b, currentAxis);
+
+        // calculate the overlap
+        Scalar overlap = isOnLeft(aExtents, bExtents) ? findOverlap(aExtents, bExtents) : findOverlap(bExtents, aExtents);
+
+        // if they aren't overlapping
         if (overlap < Scalar(0)) {
-            // they aren't overlapping
             return Vector2{ 0, 0 };  // ??? what should we return here?
         }
+
+        // check for a min update
         if (overlap < minOverlap) {
             minOverlap = overlap;
             minAxisIdx = i;
         }
     }
 
-    // a little painful because of the sqrt
-    return normalize(axis[minAxisIdx]) * minOverlap;
+    // The result is a vector along the min axis with a
+    // magnitude equal to the overlap.
+    return axis[minAxisIdx] * minOverlap;
 }
