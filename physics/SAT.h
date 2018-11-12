@@ -94,7 +94,8 @@ struct Shape {
 Vector2 findMTV (Shape a, Shape b) {
     Vector2 axis[MAX_SHAPE_SIZE];
     int axisCount = a.size + b.size;
-    determineAxis(a, b, axis);
+    determineAxis(a, axis, 0);
+    determineAxis(b, axis, a.size);
 
     int minAxisIdx = -1;
     Scalar minOverlap = 10000;
@@ -119,9 +120,14 @@ Vector2 findMTV (Shape a, Shape b) {
 }
 
 // find shape edge normals, these are the axis
-int determineAxis (Shape a, Shape b, Vector2 rAxis[]) {
-    // UNIMPLEMENTED
-    return 0;
+int determineAxis (Shape a, Vector2 rAxis[], int startIdx) {
+    for (int i = 0; i < a.size; ++i) {
+        const Vector2 & current = a.vertices[i];
+        const Vector2 & next = (i == a.size - 1) ? a.vertices[0] : a.vertices[i + 1];
+        Vector2 edge = current - next;
+        Vector2 axis = perpendicular(edge);
+        rAxis[startIdx + i] = axis;
+    }
 }
 
 // project shapes onto axis to find extents
