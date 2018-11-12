@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "math\math.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "physics", "physics\physics.vcxproj", "{25568336-5C2C-47D8-A14D-66DFE1E0221B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "physics-test", "physics-test\physics-test.vcxproj", "{F574B703-1387-4852-B296-2A23C19616F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{25568336-5C2C-47D8-A14D-66DFE1E0221B}.Release|x64.Build.0 = Release|x64
 		{25568336-5C2C-47D8-A14D-66DFE1E0221B}.Release|x86.ActiveCfg = Release|Win32
 		{25568336-5C2C-47D8-A14D-66DFE1E0221B}.Release|x86.Build.0 = Release|Win32
+		{F574B703-1387-4852-B296-2A23C19616F3}.Debug|x64.ActiveCfg = Debug|x64
+		{F574B703-1387-4852-B296-2A23C19616F3}.Debug|x64.Build.0 = Debug|x64
+		{F574B703-1387-4852-B296-2A23C19616F3}.Debug|x86.ActiveCfg = Debug|Win32
+		{F574B703-1387-4852-B296-2A23C19616F3}.Debug|x86.Build.0 = Debug|Win32
+		{F574B703-1387-4852-B296-2A23C19616F3}.Release|x64.ActiveCfg = Release|x64
+		{F574B703-1387-4852-B296-2A23C19616F3}.Release|x64.Build.0 = Release|x64
+		{F574B703-1387-4852-B296-2A23C19616F3}.Release|x86.ActiveCfg = Release|Win32
+		{F574B703-1387-4852-B296-2A23C19616F3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
