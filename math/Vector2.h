@@ -6,27 +6,20 @@
 // ---------
 // Vector
 // ----------
-// convert to a float pointer (implicit conversion?) -- doc this
+// convert to a Scalar pointer (implicit conversion?) -- doc this
 
 union Vector2 {
-    struct { float x, y; };
-    float v[2];
-    const float & operator[] (size_t idx) const { return v[idx]; }
-    float & operator[] (size_t idx) { return v[idx]; }
+    struct { Scalar x, y; };
+    Scalar v[2];
+    const Scalar & operator[] (size_t idx) const { return v[idx]; }
+    Scalar & operator[] (size_t idx) { return v[idx]; }
     Vector2 & operator= (Vector2 & other);
-    Vector2 operator- ();
+    Vector2 operator- () { return Vector2{ -x, -y }; };
     Vector2 & operator+= (const Vector2 & other);
     Vector2 & operator-= (const Vector2 & other);
-    Vector2 & operator/= (float scalar);
-    Vector2 & operator*= (float scalar);
+    Vector2 & operator/= (Scalar s);
+    Vector2 & operator*= (Scalar s);
 };
-
-inline Vector2 Vector2::operator- () {
-    Vector2 v;
-    v.x = -x;
-    v.y = -y;
-    return v;
-}
 
 inline Vector2 & Vector2::operator= (Vector2 & other) {
     x = other.x;
@@ -46,51 +39,36 @@ inline Vector2 & Vector2::operator-= (const Vector2 & other) {
     return *this;
 }
 
-inline Vector2 & Vector2::operator*= (float scalar) {
-    x *= scalar;
-    y *= scalar;
+inline Vector2 & Vector2::operator*= (Scalar s) {
+    x *= s;
+    y *= s;
     return *this;
 }
 
-inline Vector2 & Vector2::operator/= (float scalar) {
-    x /= scalar;
-    y /= scalar;
+inline Vector2 & Vector2::operator/= (Scalar s) {
+    x /= s;
+    y /= s;
     return *this;
 }
 
 inline Vector2 operator+ (Vector2 a, Vector2 b) {
-    Vector2 result;
-    result.x = a.x + b.x;
-    result.y = a.y + b.y;
-    return result;
+    return Vector2{ a.x + b.x, a.y + b.y };
 }
 
 inline Vector2 operator- (Vector2 a, Vector2 b) {
-    Vector2 result;
-    result.x = a.x - b.x;
-    result.y = a.y - b.y;
-    return result;
+    return Vector2{ a.x - b.x, a.y - b.y };
 }
 
-inline Vector2 operator* (Vector2 v, float f) {
-    Vector2 result;
-    result.x = v.x * f;
-    result.y = v.y * f;
-    return result;
+inline Vector2 operator* (Vector2 v, Scalar f) {
+    return Vector2{ v.x * f , v.y * f };
 }
 
-inline Vector2 operator* (float f, Vector2 v) {
-    Vector2 result;
-    result.x = v.x * f;
-    result.y = v.y * f;
-    return result;
+inline Vector2 operator* (Scalar f, Vector2 v) {
+    return v * f;
 }
 
-inline Vector2 operator/ (Vector2 v, float f) {
-    Vector2 result;
-    result.x = v.x / f;
-    result.y = v.y / f;
-    return result;
+inline Vector2 operator/ (Vector2 v, Scalar f) {
+    return Vector2{ v.x / f, v.y / f };
 }
 
 inline bool operator== (Vector2 a, Vector2 & b) {
@@ -102,11 +80,11 @@ inline bool operator!= (Vector2 & a, Vector2 & b) {
 }
 
 // magnitude
-inline float magnitudeSq (Vector2 & v) {
+inline Scalar magnitudeSq (Vector2 & v) {
     return v.x * v.x + v.y * v.y;
 }
 
-inline float magnitude (Vector2 & v) {
+inline Scalar magnitude (Vector2 & v) {
     return sqrtf(magnitudeSq(v));
 }
 
@@ -128,12 +106,12 @@ inline Vector2 perpendicular (Vector2 & v) {
 }
 
 // distance
-inline float distSq (Vector2 & a, Vector2 & b) {
-    float dx = a.x - b.x, dy = a.y - b.y;
+inline Scalar distSq (Vector2 & a, Vector2 & b) {
+    Scalar dx = a.x - b.x, dy = a.y - b.y;
     return (dx * dx + dy * dy);
 }
 
-inline float dist (Vector2 & a, Vector2 & b) {
+inline Scalar dist (Vector2 & a, Vector2 & b) {
     return sqrtf(distSq(a, b));
 }
 
@@ -158,14 +136,14 @@ Vector2 max (Vector2 & a, Vector2 b, Args... args) {
 }
 
 // Scalar product - dot product
-float sprod (Vector2 a, Vector2 b) {
+Scalar sprod (Vector2 a, Vector2 b) {
     return a.x * b.x + a.y * b.y;
 }
 
 // projection
 // project a onto b
 Vector2 project (Vector2 & a, Vector2 & b) {
-    float bb = sprod(b, b);
+    Scalar bb = sprod(b, b);
     if (Scalar(bb) == Scalar(0)) {
         return Vector2{ 0, 0 };
     }
@@ -191,9 +169,9 @@ Vector2 reflect (Vector2 & i, Vector2 & n) {
 // o := incident
 // n := normal
 // eta := refraction index
-Vector2 refract (Vector2 & i, Vector2 & n, float eta) {
-    float nDotI = sprod(n, i);
-    float k = 1.f - eta * eta * (1.f - nDotI * nDotI);
+Vector2 refract (Vector2 & i, Vector2 & n, Scalar eta) {
+    Scalar nDotI = sprod(n, i);
+    Scalar k = 1.f - eta * eta * (1.f - nDotI * nDotI);
     if (k < 0.f) {
         return Vector2{0, 0};
     }
@@ -209,8 +187,8 @@ Vector2 clamp (Vector2 & v, Vector2 & low, Vector2 & high) {
 //clampM
 // Constrains the magnitude of the vector to less than or
 // equal to the passed in magnitude (maxLength).
-Vector2 clampM (Vector2 & v, float maxLength) {
-    float mag = magnitude(v);
+Vector2 clampM (Vector2 & v, Scalar maxLength) {
+    Scalar mag = magnitude(v);
     Vector2 result = v;
     if (mag > maxLength) {
         (result / mag) * maxLength;
@@ -225,7 +203,7 @@ Vector2 snap (Vector2 & v, Vector2 & low, Vector2 & high) {
 
 // lerp
 // component wise lerp
-Vector2 lerp (Vector2 & a, Vector2 & b, float t) {
+Vector2 lerp (Vector2 & a, Vector2 & b, Scalar t) {
     return Vector2{ lerp(a.x, b.x, t), lerp(a.y, b.y, t) };
 }
 

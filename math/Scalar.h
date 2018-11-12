@@ -32,29 +32,84 @@ struct Scalar {
     operator float () const { return value; }
 };
 
+// <
 inline bool operator< (Scalar a, Scalar b) {
     return (a.value + EPSILON) < b.value;
 }
 
+inline bool operator< (Scalar a, float b) {
+    return a < Scalar(b);
+}
+
+inline bool operator< (float a, Scalar b) {
+    return Scalar(a) < b;
+}
+
+// <=
 inline bool operator<= (Scalar a, Scalar b) {
     return !(a > b);
 }
 
+inline bool operator<= (Scalar a, float b) {
+    return a <= Scalar(b);
+}
+
+inline bool operator<= (float a, Scalar b) {
+    return Scalar(a) <= b;
+}
+
+// >
 inline bool operator> (Scalar a, Scalar b) {
     return b < a;
 }
 
+inline bool operator> (Scalar a, float b) {
+    return a > Scalar(b);
+}
+
+inline bool operator> (float a, Scalar b) {
+    return Scalar(a) > b;
+}
+
+// >=
 inline bool operator>= (Scalar a, Scalar b) {
     return !(a < b);
 }
 
+inline bool operator>= (Scalar a, float b) {
+    return a >= Scalar(b);
+}
+
+inline bool operator>= (float a, Scalar b) {
+    return Scalar(a) >= b;
+}
+
+// ==
 inline bool operator== (Scalar a, Scalar b) {
     return !(a < b) && !(b < a);
 }
 
+inline bool operator== (Scalar a, float b) {
+    return a == Scalar(b);
+}
+
+inline bool operator== (float a, Scalar b) {
+    return Scalar(a) == b;
+}
+
+// !=
 inline bool operator!= (Scalar a, Scalar b) {
     return !(a == b);
 }
+
+inline bool operator!= (Scalar a, float b) {
+    return a != Scalar(b);
+}
+
+inline bool operator!= (float a, Scalar b) {
+    return Scalar(a) != b;
+}
+
 
 // -----------
 //  min
