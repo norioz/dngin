@@ -107,3 +107,30 @@ inline Scalar snap (Scalar x, Scalar low, Scalar high) {
 inline Scalar lerp (Scalar a, Scalar b, Scalar t) {
     return a * (1 - t) + b * t;
 }
+
+// ---
+
+bool lt (float a, float b) {
+    return a + EPSILON < b;
+}
+
+bool eq (float a, float b) {
+    return !(a < b) && !(b < a);
+}
+
+bool lte (float a, float b) {
+    return lt(a, b) || eq(a, b);
+}
+
+bool gt (float a, float b) {
+    return lt(b, a);
+}
+
+bool gte (float a, float b) {
+    return !(lt(a, b));
+}
+
+
+bool neq (float a, float b) {
+    return !(eq(a, b));
+}
