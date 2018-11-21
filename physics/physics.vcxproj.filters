@@ -18,5 +18,8 @@
     <ClInclude Include="SAT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
