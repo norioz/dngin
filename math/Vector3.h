@@ -16,11 +16,7 @@ union Vector3 {
 };
 
 inline Vector3 Vector3::operator-() {
-    Vector3 v;
-    v.x = -x;
-    v.y = -y;
-    v.z = -z;
-    return v;
+    return Vector3{ -x, -y, -z };
 }
 
 inline Vector3 & Vector3::operator= (const Vector3 & other) {
@@ -59,27 +55,15 @@ inline Vector3 & Vector3::operator/= (float scalar) {
 }
 
 inline Vector3 operator+ (Vector3 a, Vector3 b) {
-    Vector3 result;
-    result.x = a.x + b.x;
-    result.y = a.y + b.y;
-    result.z = a.z + b.z;
-    return result;
+    return Vector3{ a.x + b.x, a.y + b.y, a.z + b.z };
 }
 
 inline Vector3 operator- (Vector3 a, Vector3 b) {
-    Vector3 result;
-    result.x = a.x - b.x;
-    result.y = a.y - b.y;
-    result.z = a.z - b.z;
-    return result;
+    return Vector3{ a.x - b.x, a.y - b.y, a.z - b.z };
 }
 
 inline Vector3 operator* (Vector3 v, float f) {
-    Vector3 result;
-    result.x = v.x * f;
-    result.y = v.y * f;
-    result.z = v.z * f;
-    return result;
+    return Vector3{ v.x * f, v.y * f, v.z * f };
 }
 
 inline Vector3 operator* (float f, Vector3 v) {
@@ -87,17 +71,11 @@ inline Vector3 operator* (float f, Vector3 v) {
 }
 
 inline Vector3 operator/ (Vector3 v, float f) {
-    Vector3 result;
-    result.x = v.x / f;
-    result.y = v.y / f;
-    result.z = v.z / f;
-    return result;
+    return Vector3{ v.x / f, v.y / f, v.z / f };
 }
 
 inline bool operator== (Vector3 a, Vector3 & b) {
-    return Scalar(a.x) == Scalar(b.x) &&
-        Scalar(a.y) == Scalar(b.y) &&
-        Scalar(a.z) == Scalar(b.z);
+    return eq(a.x, b.x) && eq(a.y, b.y) && eq(a.z, b.z);
 }
 
 inline bool operator!= (Vector3 & a, Vector3 & b) {
@@ -119,13 +97,13 @@ inline Vector3 normalize (Vector3 & v) {
     if (m == Scalar{ 0 }) {
         return Vector3{ 0, 0, 0 };
     }
-    return Vector3{ v.x / m, v.y / m, v.z / m};
+    return v / m;
 }
 
 // distance
 inline float distSq (Vector3 & a, Vector3 & b) {
     float dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
-    return (dx * dx + dy * dy + dz * dz);
+    return dx * dx + dy * dy + dz * dz;
 }
 
 inline float dist (Vector3 & a, Vector3 & b) {
@@ -158,17 +136,18 @@ float sprod (Vector3 a, Vector3 b) {
 }
 
 Vector3 cross (Vector3 a, Vector3 b) {
-    float x = a.y * b.z - a.z * b.y;
-    float y = a.z * b.x - a.x * b.z;
-    float z = a.x * b.y - a.y * b.x;
-    return Vector3{ x, y, z };
+    return Vector3{
+        a.y * b.z - a.z * b.y,
+        a.z * b.x - a.x * b.z,
+        a.x * b.y - a.y * b.x
+    };
 }
 
 // projection
 // project a onto b
 Vector3 project (Vector3 & a, Vector3 & b) {
     float bb = sprod(b, b);
-    if (Scalar(bb) == Scalar(0)) {
+    if (eq(bb, 0.f)) {
         return Vector3{ 0, 0, 0 };
     }
     return (sprod(a, b) / bb) * b;

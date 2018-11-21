@@ -94,7 +94,7 @@ inline Vector2 operator/ (Vector2 v, float f) {
 }
 
 inline bool operator== (Vector2 a, Vector2 & b) {
-    return Scalar(a.x) == Scalar(b.x) && Scalar(a.y) == Scalar(b.y);
+    return eq(a.x, b.x) && eq(a.y, b.y);
 }
 
 inline bool operator!= (Vector2 & a, Vector2 & b) {
@@ -112,8 +112,8 @@ inline float magnitude (Vector2 & v) {
 
 // normalize
 inline Vector2 normalize (Vector2 & v) {
-    Scalar m = magnitude(v);
-    if (m == Scalar{ 0 }) {
+    float m = magnitude(v);
+    if (eq(m, 0.f)) {
         return Vector2{ 0, 0 };
     }
     return Vector2{ v.x / m, v.y / m };
@@ -158,18 +158,18 @@ Vector2 max (Vector2 & a, Vector2 b, Args... args) {
 }
 
 // Scalar product - dot product
-float sprod (Vector2 a, Vector2 b) {
+float dot (Vector2 a, Vector2 b) {
     return a.x * b.x + a.y * b.y;
 }
 
 // projection
 // project a onto b
 Vector2 project (Vector2 & a, Vector2 & b) {
-    float bb = sprod(b, b);
-    if (Scalar(bb) == Scalar(0)) {
+    float bb = dot(b, b);
+    if (eq(bb, 0.f)) {
         return Vector2{ 0, 0 };
     }
-    return (sprod(a, b) / bb) * b;
+    return (dot(a, b) / bb) * b;
 }
 
 // deprojection -- vector rejection
@@ -184,7 +184,7 @@ Vector2 deproject (Vector2 & a, Vector2 & b) {
 // i := incident vector
 // Credit: HLSL documentation; GLSL spec documentation
 Vector2 reflect (Vector2 & i, Vector2 & n) {
-    return i - 2.f * sprod(i, n) * n;
+    return i - 2.f * dot(i, n) * n;
 }
 
 // refract
@@ -192,10 +192,10 @@ Vector2 reflect (Vector2 & i, Vector2 & n) {
 // n := normal
 // eta := refraction index
 Vector2 refract (Vector2 & i, Vector2 & n, float eta) {
-    float nDotI = sprod(n, i);
+    float nDotI = dot(n, i);
     float k = 1.f - eta * eta * (1.f - nDotI * nDotI);
-    if (k < 0.f) {
-        return Vector2{0, 0};
+    if (lt(k, 0.f)) {
+        return Vector2{ 0, 0 };
     }
     return eta * i - (eta * nDotI + sqrtf(k)) * n;
 }
@@ -212,7 +212,7 @@ Vector2 clamp (Vector2 & v, Vector2 & low, Vector2 & high) {
 Vector2 clampM (Vector2 & v, float maxLength) {
     float mag = magnitude(v);
     Vector2 result = v;
-    if (mag > maxLength) {
+    if (gt(mag, maxLength)) {
         (result / mag) * maxLength;
     }
     return result;

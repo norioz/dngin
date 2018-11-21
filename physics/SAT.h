@@ -105,10 +105,10 @@ void determineAxis (Shape a, Vector2 rAxis[], int startIdx) {
 
 // project shapes onto axis to find extents
 AxisProjection findExtents (Shape a, const Vector2 & axis) {
-    float min = sprod(axis, a.vertices[0]);
+    float min = dot(axis, a.vertices[0]);
     float max = min;
     for (int i = 0; i < a.size; ++i) {
-        float m = sprod(axis, a.vertices[i]);
+        float m = dot(axis, a.vertices[i]);
         if (m < min) {
             min = m;
         }
